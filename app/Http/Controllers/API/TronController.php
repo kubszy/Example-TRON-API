@@ -35,6 +35,18 @@ class TronController extends Controller
 
     public function getWalletBalance($address)
     {
+        $fullNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
+        $solidityNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
+        $eventServer = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
 
+        try {
+          $tron = new \IEXBase\TronAPI\Tron($fullNode, $solidityNode, $eventServer);
+        } catch (\IEXBase\TronAPI\Exception\TronException $e) {
+          exit($e->getMessage());
+        }
+
+        $tron = $tron->getBalance($address, true);
+
+        return response()->json($tron, 200);
     }
 }

@@ -18,3 +18,4 @@ Route::post('/register', 'API\AuthController@register');
 Route::post('/login', 'API\AuthController@login');
 
 Route::post('/create-wallet', 'API\TronController@createWallet')->middleware('auth:api');
+Route::get('/get-wallet-balance/{address}', 'API\TronController@getWalletBalance')->middleware('auth:api');
