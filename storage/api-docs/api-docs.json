@@ -1,0 +1,121 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "​ Example TRON API",
+        "description": "Example TRON API",
+        "contact": {
+            "email": "user@user.com"
+        },
+        "version": "0.0.1"
+    },
+    "paths": {
+        "/register": {
+            "post": {
+                "summary": "Create new user",
+                "description": "Create new user and save in database",
+                "operationId": "register",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "description": "Name of new user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "Email of new user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "Password of new user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "summary": "Login new user",
+                "description": "Login new user in system",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "Email of new user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "path",
+                        "description": "Password of new user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/create-wallet": {
+            "post": {
+                "summary": "Create new wallet",
+                "description": "Create new wallet and save in database",
+                "operationId": "createWallet",
+                "responses": {
+                    "201": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        },
+        "/get-wallet-balance/{address}": {
+            "get": {
+                "summary": "Get balance of wallet",
+                "description": "Returns balance of wallet for the address provided",
+                "operationId": "getWalletBalance",
+                "parameters": [
+                    {
+                        "name": "address",
+                        "in": "path",
+                        "description": "The address of wallet",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                }
+            }
+        }
+    }
+}

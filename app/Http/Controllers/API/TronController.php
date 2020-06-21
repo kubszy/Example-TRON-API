@@ -9,7 +9,19 @@ use App\Wallet;
 
 class TronController extends Controller
 {
-
+    /**
+     * @OA\Post(
+     *      path="/create-wallet",
+     *      operationId="createWallet",
+     *      summary="Create new wallet",
+     *      description="Create new wallet and save in database",
+     *      @OA\Response(
+     *          response=201,
+     *          description="Successful operation",
+     *       )
+     *
+     *     )
+     */
     public function createWallet()
     {
         $fullNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
@@ -32,7 +44,26 @@ class TronController extends Controller
         return response()->json($wallet, 201);
     }
 
-
+    /**
+     * @OA\Get(
+     *      path="/get-wallet-balance/{address}",
+     *      operationId="getWalletBalance",
+     *      summary="Get balance of wallet",
+     *      description="Returns balance of wallet for the address provided",
+     *     @OA\Parameter(
+     *         name="address",
+     *         in="path",
+     *         description="The address of wallet",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *       )
+     *
+     *     )
+     */
     public function getWalletBalance($address)
     {
         $fullNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
