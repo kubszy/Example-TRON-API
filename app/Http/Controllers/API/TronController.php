@@ -7,8 +7,18 @@ use Illuminate\Http\Request;
 
 use App\Wallet;
 
+use App\Services\Tron;
+
 class TronController extends Controller
 {
+
+    private $tron;
+
+    public function __construct(Tron $tron)
+    {
+        $this->tron = $tron;
+    }
+
     /**
      * @OA\Post(
      *      path="/create-wallet",
@@ -24,17 +34,7 @@ class TronController extends Controller
      */
     public function createWallet()
     {
-        $fullNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
-        $solidityNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
-        $eventServer = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
-
-        try {
-          $tron = new \IEXBase\TronAPI\Tron($fullNode, $solidityNode, $eventServer);
-        } catch (\IEXBase\TronAPI\Exception\TronException $e) {
-          exit($e->getMessage());
-        }
-
-        $tron = $tron->createAccount();
+        $tron = $this->tron->createTron()->createAccount();
 
         $wallet = new Wallet();
         $wallet->address = $tron['address'];
@@ -66,17 +66,7 @@ class TronController extends Controller
      */
     public function getWalletBalance($address)
     {
-        $fullNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
-        $solidityNode = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
-        $eventServer = new \IEXBase\TronAPI\Provider\HttpProvider('https://api.trongrid.io');
-
-        try {
-          $tron = new \IEXBase\TronAPI\Tron($fullNode, $solidityNode, $eventServer);
-        } catch (\IEXBase\TronAPI\Exception\TronException $e) {
-          exit($e->getMessage());
-        }
-
-        $tron = $tron->getBalance($address, true);
+        $tron = $this->tron->createTron()->getBalance($address, true);
 
         return response()->json($tron, 200);
     }
